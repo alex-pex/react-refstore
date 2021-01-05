@@ -12,6 +12,8 @@ function App({}: AppProps) {
     const timer = setTimeout(() => setCount(count + 1), 1000);
     return () => clearTimeout(timer);
   }, [count, setCount]);
+
+  
   // Return the App component.
   return (
     <div className="App">
