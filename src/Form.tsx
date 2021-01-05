@@ -14,13 +14,9 @@ function Form(props: FormProps) {
       onSubmit={(event) => {
         event.preventDefault();
         props.onComplete(title);
-        setTimeout(() => {
-          refStore.find('block').then((ref) => {
-            console.log(ref)
-            ref.querySelector('input')?.focus();
-          });
-
-        }, 1200)
+        refStore.find('block').then((ref) => {
+          ref.querySelector('input')?.focus();
+        });
       }}
     >
       <input
