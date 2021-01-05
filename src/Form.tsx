@@ -24,7 +24,7 @@ function Form(props: FormProps) {
         value={title}
         onChange={(event) => setTitle(event.target.value)}
       />
-      <button type="submit">Go!</button>
+      <button type="submit" disabled={!title}>Go!</button>
     </form>
   );
 }
