@@ -1,17 +1,4 @@
-import React, { createContext, ReactNode, useContext } from 'react';
-
-// type RefStoreValue = Record<string, HTMLElement>;
-// const RefStoreContext = createContext<React.MutableRefObject<RefStoreValue>>({ current: {} });
-
-// type RefStoreProps = PropsWithChildren<{}>;
-// export function RefStore({ children }: RefStoreProps) {
-//   const store = useRef<RefStoreValue>({});
-
-//   return <RefStoreContext.Provider value={store}>{children}</RefStoreContext.Provider>;
-// }
-
-// const useRefStore = useContext(RefStoreContext);
-// export default useRefStore;
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 interface RefStore {
   register: (name: string) => (value: HTMLElement | null) => void;
@@ -52,15 +39,17 @@ function createRefStore(): RefStore {
   };
 }
 
-const RefStoreContext = createContext(createRefStore());
+const globalRefStore = createRefStore();
+const RefStoreContext = createContext(globalRefStore);
 
 interface RefStoreProps {
   children: ReactNode;
 }
 
 function RefStoreProvider(props: RefStoreProps) {
-  //const [refStore] = useState(() => ({ current: createRefStore() }));
-  return <>{props.children}</>;
+  const [{ current: refStore }] = useState(() => ({ current: createRefStore() }));
+
+  return <RefStoreContext.Provider value={refStore}>{props.children}</RefStoreContext.Provider>;
 }
 
 export const useRefStore = () => useContext(RefStoreContext);
