@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRefStore } from './RefStore';
 
 interface BlockProps {
   title: string;
@@ -13,12 +14,14 @@ function Block(props: BlockProps) {
     return () => clearTimeout(timeout);
   }, [props.title]);
 
+  const refStore = useRefStore();
+
   if (!isReady) {
     return <h2>Chargement ...</h2>;
   }
-  
+
   return (
-    <div>
+    <div ref={refStore.register('block')}>
       <h2>{props.title}</h2>
       <input type="text" placeholder={props.title} />
     </div>
